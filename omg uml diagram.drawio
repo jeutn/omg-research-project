@@ -1,10 +1,10 @@
 <mxfile host="app.diagrams.net">
   <diagram name="Page-1" id="oEfwf_o-3BkGl2VBtrmy">
-    <mxGraphModel dx="2335" dy="1610" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="505" dy="348" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="X7CixComeaPSObrOomaS-2" parent="1" style="swimlane;whiteSpace=wrap;html=1;" value="Card" vertex="1">
+        <mxCell id="X7CixComeaPSObrOomaS-2" parent="1" style="swimlane;whiteSpace=wrap;html=1;" value="&lt;i&gt;(Abstract) Card&lt;/i&gt;" vertex="1">
           <mxGeometry height="103" width="200" x="512" y="130" as="geometry" />
         </mxCell>
         <mxCell id="X7CixComeaPSObrOomaS-6" parent="1" style="swimlane;whiteSpace=wrap;html=1;" value="BuildingCard" vertex="1">
