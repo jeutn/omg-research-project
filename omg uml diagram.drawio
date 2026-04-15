@@ -1,9 +1,89 @@
 <mxfile host="app.diagrams.net">
   <diagram name="Page-1" id="oEfwf_o-3BkGl2VBtrmy">
-    <mxGraphModel dx="934" dy="644" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2335" dy="1610" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="X7CixComeaPSObrOomaS-2" parent="1" style="swimlane;whiteSpace=wrap;html=1;" value="Card" vertex="1">
+          <mxGeometry height="103" width="200" x="512" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="X7CixComeaPSObrOomaS-6" parent="1" style="swimlane;whiteSpace=wrap;html=1;" value="BuildingCard" vertex="1">
+          <mxGeometry height="200" width="200" x="262" y="274" as="geometry" />
+        </mxCell>
+        <mxCell id="X7CixComeaPSObrOomaS-16" edge="1" parent="1" source="X7CixComeaPSObrOomaS-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="X7CixComeaPSObrOomaS-2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="747" y="253" />
+              <mxPoint x="612" y="253" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="X7CixComeaPSObrOomaS-7" parent="1" style="swimlane;whiteSpace=wrap;html=1;" value="WorkerCard" vertex="1">
+          <mxGeometry height="200" width="200" x="550" y="274" as="geometry" />
+        </mxCell>
+        <mxCell id="X7CixComeaPSObrOomaS-17" edge="1" parent="1" source="X7CixComeaPSObrOomaS-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="X7CixComeaPSObrOomaS-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="X7CixComeaPSObrOomaS-8" parent="1" style="swimlane;whiteSpace=wrap;html=1;" value="AssistantCard" vertex="1">
+          <mxGeometry height="200" width="200" x="789" y="274" as="geometry" />
+        </mxCell>
+        <mxCell id="X7CixComeaPSObrOomaS-18" edge="1" parent="1" source="X7CixComeaPSObrOomaS-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="X7CixComeaPSObrOomaS-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="X7CixComeaPSObrOomaS-9" parent="1" style="swimlane;whiteSpace=wrap;html=1;" value="Charburner" vertex="1">
+          <mxGeometry height="110" width="200" x="83" y="519" as="geometry" />
+        </mxCell>
+        <mxCell id="X7CixComeaPSObrOomaS-19" edge="1" parent="1" source="X7CixComeaPSObrOomaS-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="X7CixComeaPSObrOomaS-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="X7CixComeaPSObrOomaS-11" parent="1" style="swimlane;whiteSpace=wrap;html=1;" value="MarketOffice" vertex="1">
+          <mxGeometry height="110" width="200" x="287" y="517" as="geometry" />
+        </mxCell>
+        <mxCell id="X7CixComeaPSObrOomaS-20" edge="1" parent="1" source="X7CixComeaPSObrOomaS-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="X7CixComeaPSObrOomaS-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="X7CixComeaPSObrOomaS-12" parent="1" style="swimlane;whiteSpace=wrap;html=1;" value="ProductionBuilding" vertex="1">
+          <mxGeometry height="110" width="200" x="497" y="517" as="geometry" />
+        </mxCell>
+        <mxCell id="X7CixComeaPSObrOomaS-15" edge="1" parent="1" source="X7CixComeaPSObrOomaS-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.465;entryY=0.01;entryDx=0;entryDy=0;entryPerimeter=0;" target="X7CixComeaPSObrOomaS-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="X7CixComeaPSObrOomaS-21" parent="1" style="swimlane;whiteSpace=wrap;html=1;" value="Player" vertex="1">
+          <mxGeometry height="200" width="200" x="1050" y="233" as="geometry" />
+        </mxCell>
+        <mxCell id="X7CixComeaPSObrOomaS-25" edge="1" parent="1" source="X7CixComeaPSObrOomaS-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="X7CixComeaPSObrOomaS-23">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="X7CixComeaPSObrOomaS-22" parent="1" style="swimlane;whiteSpace=wrap;html=1;" value="BuildingSite" vertex="1">
+          <mxGeometry height="94" width="200" x="1058" y="476" as="geometry" />
+        </mxCell>
+        <mxCell id="X7CixComeaPSObrOomaS-23" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=23;" value="Building" vertex="1">
+          <mxGeometry height="94" width="200" x="1054" y="598" as="geometry" />
+        </mxCell>
+        <mxCell id="X7CixComeaPSObrOomaS-24" edge="1" parent="1" source="X7CixComeaPSObrOomaS-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.458;entryY=0.014;entryDx=0;entryDy=0;entryPerimeter=0;" target="X7CixComeaPSObrOomaS-22">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="X7CixComeaPSObrOomaS-28" parent="1" style="swimlane;whiteSpace=wrap;html=1;" value="GameManager" vertex="1">
+          <mxGeometry height="200" width="200" x="1347" y="223" as="geometry" />
+        </mxCell>
+        <mxCell id="X7CixComeaPSObrOomaS-29" edge="1" parent="1" source="X7CixComeaPSObrOomaS-30" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="X7CixComeaPSObrOomaS-31">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="X7CixComeaPSObrOomaS-30" parent="1" style="swimlane;whiteSpace=wrap;html=1;" value="Deck" vertex="1">
+          <mxGeometry height="94" width="200" x="1355" y="466" as="geometry" />
+        </mxCell>
+        <mxCell id="X7CixComeaPSObrOomaS-31" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=23;" value="MarketDisplay" vertex="1">
+          <mxGeometry height="94" width="200" x="1351" y="588" as="geometry" />
+        </mxCell>
+        <mxCell id="X7CixComeaPSObrOomaS-32" edge="1" parent="1" source="X7CixComeaPSObrOomaS-28" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.458;entryY=0.014;entryDx=0;entryDy=0;entryPerimeter=0;" target="X7CixComeaPSObrOomaS-30">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="X7CixComeaPSObrOomaS-33" parent="1" style="swimlane;whiteSpace=wrap;html=1;" value="Economy" vertex="1">
+          <mxGeometry height="200" width="200" x="159" y="710" as="geometry" />
+        </mxCell>
+        <mxCell id="X7CixComeaPSObrOomaS-36" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="coins&lt;br&gt;victoryPoints&lt;br&gt;&lt;br&gt;PayCoins()&lt;br&gt;CoinsToVP()&lt;div&gt;UpdateCoins()&amp;nbsp; &amp;nbsp;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="132" width="164" x="178" y="749" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
