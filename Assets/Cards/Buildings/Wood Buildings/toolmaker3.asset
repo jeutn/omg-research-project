@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4053dfb2895445858666dd9a459fadf, type: 3}
+  m_Name: toolmaker3
+  m_EditorClassIdentifier: Assembly-CSharp::BuildingData
+  cardID: 26
+  cardType: 0
+  rawResource: 1
+  cardName: Tool Maker
+  costToBuild: 15
+  victoryPoints: 4
+  halfSun: 0
+  prodOutput: 21
+  goodsvalue: 6
+  productionInput:
+  - type: 2
+    amount: 3
+  - type: 1
+    amount: 3
+  productionChain: 100000000b000000

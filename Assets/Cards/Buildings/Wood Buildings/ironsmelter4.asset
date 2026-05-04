@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4053dfb2895445858666dd9a459fadf, type: 3}
+  m_Name: ironsmelter4
+  m_EditorClassIdentifier: Assembly-CSharp::BuildingData
+  cardID: 16
+  cardType: 0
+  rawResource: 4
+  cardName: Iron Smelter
+  costToBuild: 8
+  victoryPoints: 2
+  halfSun: 0
+  prodOutput: 16
+  goodsvalue: 3
+  productionInput:
+  - type: 2
+    amount: 2
+  - type: 1
+    amount: 2
+  productionChain: 0b00000003000000

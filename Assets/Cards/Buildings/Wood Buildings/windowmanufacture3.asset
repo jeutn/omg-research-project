@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4053dfb2895445858666dd9a459fadf, type: 3}
+  m_Name: windowmanufacture3
+  m_EditorClassIdentifier: Assembly-CSharp::BuildingData
+  cardID: 30
+  cardType: 0
+  rawResource: 4
+  cardName: Window Manufacture
+  costToBuild: 7
+  victoryPoints: 3
+  halfSun: 0
+  prodOutput: 22
+  goodsvalue: 5
+  productionInput:
+  - type: 3
+    amount: 1
+  - type: 2
+    amount: 4
+  productionChain: 130000000f000000
