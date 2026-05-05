@@ -12,11 +12,11 @@ public class Deck : MonoBehaviour
     [SerializeField] private CardCollection _playerDeck;
     [SerializeField] private Card _cardPrefab;
     [SerializeField] private Canvas _cardCanvas;
+    [SerializeField] private int halfSunCount = 20;
 
     //represent instantiated cards
     private List<Card> _deckPile = new();
     private List<Card> _discardPile = new();
-    public List<Card> HandCards {get; private set;} = new();
 
     private void Awake()
     {
@@ -46,6 +46,7 @@ public class Deck : MonoBehaviour
             
         }
         ShuffleDeck();
+        ApplyHalfSun();
     }
 
     //fisher yates
@@ -61,40 +62,43 @@ public class Deck : MonoBehaviour
         
     }
 
-    public void DrawHand(int amount)
+    public void DrawHand(Player player, int amount)
     {
         for (int i = 0; i < amount; i++)
         {
             if (_deckPile.Count <= 0)
             {
-                _discardPile = _deckPile;
-                _discardPile.Clear();
-                ShuffleDeck();
+                if (_discardPile.Count <= 0) break; //no cards anywhere, stop drawing
+                {
+                    _deckPile.AddRange(_discardPile);
+                    _discardPile.Clear();
+                    ShuffleDeck();
+                }
             }
-            HandCards.Add(_deckPile[0]);
-            _deckPile[0].gameObject.SetActive(true);
+
             _deckPile.RemoveAt(0);
-
-            //edge case, if all drawn cards are in player hand 
-            if (_deckPile.Count > 0)
-            {
-                HandCards.Add(_deckPile[0]);
-                _deckPile[0].gameObject.SetActive(true);
-                _deckPile.RemoveAt(0);
-            }
+            _deckPile[0].owner = player;
+            _deckPile[0].gameObject.SetActive(true);
+            player.playerHand.Add(_deckPile[0]);
         }
-
-
 
     }
 
-    public void DiscardCard(Card card)
+    public void DiscardCard(Player player, Card card)
     {
-        if (HandCards.Contains(card))
+        if (player.playerHand.Contains(card))
         {
-            HandCards.Remove(card);
-            _discardPile.Remove(card);
+            player.playerHand.Remove(card);
+            _discardPile.Add(card);
             card.gameObject.SetActive(false);
         }
     }
+
+    private void ApplyHalfSun()
+{
+    for (int i = 0; i < _deckPile.Count; i++)
+    {
+        _deckPile[i].halfSun = i < halfSunCount;
+    }
+}
 }

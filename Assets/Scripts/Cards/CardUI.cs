@@ -70,7 +70,7 @@ public class CardUI : MonoBehaviour
     private void Awake()
     {
         _card = GetComponent<Card>();
-        Setup(_card.cardData);
+        Setup(_card);
         
     }
 
@@ -79,35 +79,35 @@ public class CardUI : MonoBehaviour
         Awake();
     }
 
-    public void Setup(CardData cardData)
+    public void Setup(Card card)
     {
-        if (cardData == null){
+        if (card == null){
             Debug.LogWarning("CardData is null");
             return;
         }
         //COMMON UI ATTRIBUTES
         //set background based on resource type
-        _cardBG.sprite = GetBackground(cardData.rawResource);
+        _cardBG.sprite = GetBackground(card.cardData.rawResource);
 
         //set UI text
-        _cardName.text = cardData.cardName;
-        _coinsValue.text = cardData.costToBuild.ToString();
-        _vpValue.text = cardData.victoryPoints.ToString();
+        _cardName.text = card.cardData.cardName;
+        _coinsValue.text = card.cardData.costToBuild.ToString();
+        _vpValue.text = card.cardData.victoryPoints.ToString();
 
-        _coinsValue.gameObject.SetActive(cardData.costToBuild > 0);
-        _vpValue.gameObject.SetActive(cardData.victoryPoints > 0);
+        _coinsValue.gameObject.SetActive(card.cardData.costToBuild > 0);
+        _vpValue.gameObject.SetActive(card.cardData.victoryPoints > 0);
 
         //shows sun if true
-        _halfSun.gameObject.SetActive(cardData.halfSun);  
+        _halfSun.gameObject.SetActive(card.halfSun);  
         
         //split into production and market card setup
-        if (cardData is ProdCardData prodCardData)
+        if (card.cardData is ProdCardData prodCardData)
         {
             productionData.SetActive(true);
             marketOfficeData.SetActive(false);
             SetupProd(prodCardData);
 
-        } else if (cardData is MarketCardData marketCardData)
+        } else if (card.cardData is MarketCardData marketCardData)
         {
             productionData.SetActive(false);
             marketOfficeData.SetActive(true);

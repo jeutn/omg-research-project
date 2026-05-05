@@ -8,6 +8,5 @@ public abstract class CardData : ScriptableObject
     public string cardName;
     public int costToBuild;
     public int victoryPoints;
-    public bool halfSun;
 
 }

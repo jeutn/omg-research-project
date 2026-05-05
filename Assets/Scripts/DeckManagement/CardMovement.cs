@@ -35,6 +35,6 @@ public class CardMovement : MonoBehaviour, IDragHandler, IEndDragHandler, IBegin
     public void OnEndDrag(PointerEventData eventData)
     {
         _isBeingDragged = false;
-        Deck.Instance.DiscardCard(_card);
+        Deck.Instance.DiscardCard(_card.owner, _card);
     }
 }

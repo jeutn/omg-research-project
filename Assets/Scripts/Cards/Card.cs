@@ -5,17 +5,17 @@ using UnityEngine;
 
 public class Card : MonoBehaviour
 {
+    public Player owner;
     
     public CardData cardData;
     public bool usedAsResource;
     public bool isBuilt;
-
-    [field: SerializeField] public CardData scriptableData {get; private set;}
+    public bool halfSun;
 
     public void SetUp(CardData data)
     {
-        scriptableData = data;
-        GetComponent<CardUI>().Setup(scriptableData);
+        cardData = data;
+        GetComponent<CardUI>().Setup(this);
     }
     
 
