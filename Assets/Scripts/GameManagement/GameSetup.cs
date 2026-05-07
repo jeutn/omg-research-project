@@ -1,12 +1,9 @@
 using System.Collections.Generic;
-using Mono.Cecil;
 using UnityEngine;
 
 public class GameSetup : MonoBehaviour
 {
-    //public List<CardData> deck;
-    public Player player1;
-    public Player player2;
+    public static GameSetup Instance;
     public ProdCardData[] charburners; //need to add players + gamesetup to canvas, then will show in inspector 
     private int startingGoodsAmt = 7;
     private int _charburnerIndex = 0;
@@ -14,11 +11,12 @@ public class GameSetup : MonoBehaviour
     [SerializeField] private Card _cardPrefab;
     [SerializeField] private Canvas _cardCanvas;
 
-    public void StartGame()
+    public void StartGameSetup()
     {
         ShuffleCharburners();
-        SetupPlayer(player1);
-        SetupPlayer(player2);
+        SetupPlayer(GameManager.Instance.player1);
+        SetupPlayer(GameManager.Instance.player2);
+        Debug.Log("Game setup done");
     }
 
     private void SetupPlayer(Player player) //DOESNT SHOW IN UI JUST YET

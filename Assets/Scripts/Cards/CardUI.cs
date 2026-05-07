@@ -11,7 +11,8 @@ public class CardUI : MonoBehaviour
 {
     private Card _card;
 
-    [Header("Prefab Elements")] //references to objects in the prefab
+    [Header("Prefab Elements")] //references to objects in the prefab 
+    // GO through this again - make sure naming conventions are consistent 
     [SerializeField] private GameObject productionData;
     [SerializeField] private GameObject marketOfficeData;
     [SerializeField] private Image _cardBG;

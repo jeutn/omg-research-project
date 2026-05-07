@@ -62,6 +62,20 @@ public class Deck : MonoBehaviour
         
     }
 
+    public Card DrawCard()
+    {
+        if (_deckPile.Count == 0)
+        {
+            return null;
+        }
+
+        Card card = _deckPile[0];
+        _deckPile.RemoveAt(0);
+
+        card.gameObject.SetActive(true);
+        return card;
+    }
+
     public void DrawHand(Player player, int amount)
     {
         for (int i = 0; i < amount; i++)
