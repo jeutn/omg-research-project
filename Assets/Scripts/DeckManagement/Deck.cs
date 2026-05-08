@@ -76,7 +76,7 @@ public class Deck : MonoBehaviour
         return card;
     }
 
-    public void DrawHand(Player player, int amount)
+    public void DrawHand(Player player, int amount) //discardpile only gets put back into main deck in this method...
     {
         for (int i = 0; i < amount; i++)
         {
@@ -90,10 +90,12 @@ public class Deck : MonoBehaviour
                 }
             }
 
+            Card card = _deckPile[0];
             _deckPile.RemoveAt(0);
-            _deckPile[0].owner = player;
-            _deckPile[0].gameObject.SetActive(true);
-            player.playerHand.Add(_deckPile[0]);
+
+            card.owner = player;
+            card.gameObject.SetActive(true);
+            player.playerHand.Add(card);
         }
 
     }

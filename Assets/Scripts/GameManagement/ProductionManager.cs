@@ -42,12 +42,12 @@ public class ProductionManager : MonoBehaviour
     }
 
     //HELPER METHODS  
-    private void DetermineGoodsAmt(Player player)
+    private int DetermineGoodsAmt(Player player)
     {
         //ternary operator, if efficient worker, goodsproduced: 2, if sloppy: 1
-        goodsProduced = player.workerMode == WorkerMode.Efficient ? 2 : 1;
+        return goodsProduced = player.workerMode == WorkerMode.Efficient ? 2 : 1;
     }
-    private bool CanProduce(Player player, Card building)
+    private bool CanProduceWithSelected(Player player, Card building)
     {
         // check player hand + market display for required resources
         // make sure to use ProdCardData prodData from building;
@@ -79,11 +79,39 @@ public class ProductionManager : MonoBehaviour
         return total;
     }
 
-    //method to confirm production - discard selected hand cards + resolves output and economies 
+    //method to confirm production - discard selected hand cards + resolves output and economies
+    public void ConfirmProduction(Player player)
+    {
+        //if production building doesnt exist, cast to proddata, then check if there isnt enough resources 
+        if (player.productionBuilding == null || player.productionBuilding.cardData is not ProdCardData prodData || !CanProduceWithSelected(player, player.productionBuilding))
+        {
+            Debug.Log("Cannot produce");
+            //need to move on to next player
+            return;
+        }
 
-    //method to pass production turn 
+        //if all conditions are met:
+        foreach (Card card in player.selectedResources)
+        {
+            player.playerHand.Remove(card);
+            Deck.Instance.DiscardCard(player, card);
+        }
+        player.selectedResources.Clear();
+        int amountProduced = DetermineGoodsAmt(player);
+        player.goodsInventory[prodData.prodOutput] += amountProduced;
+        player.coins += ResourceCoinValues.Value[prodData.prodOutput] * amountProduced;
+    }
+
+    //method to pass production turn - if player chooses to forfeit their turn 
+    public void PassProduction(Player player)
+    {
+        player.selectedResources.Clear();
+        PhaseManager.Instance.PlayerTurnEnd();
+    } 
 
     //method to minus 1 if worker mode is sloppy 
+
+    //at the end of production or round - RESET WORKER MODE TO DEFAULT
 
 
 

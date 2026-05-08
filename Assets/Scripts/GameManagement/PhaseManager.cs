@@ -31,7 +31,7 @@ public class PhaseManager : MonoBehaviour
         //run production logic
                 ProductionManager.Instance.ResolveProduction(GameManager.Instance.player1, GameManager.Instance.player1.productionBuilding); //p1 and p2 will show at the same time with this code...do i want a delay, also would it be better to use a currentPlayer index that cycles through rather than coding for p1/p2 each time
                 ProductionManager.Instance.ResolveProduction(GameManager.Instance.player2, GameManager.Instance.player2.productionBuilding); //can move to phasemanager and call runProduction
-                
+
     }
 
     //CLEAN UP
@@ -39,7 +39,13 @@ public class PhaseManager : MonoBehaviour
     {
         MarketManager.Instance.ClearMarket();
         GameManager.Instance.NextPhase();
-        //other cleanup logic 
+        //RESET WORKER MODE TO DEFAULT 
+        
+    }
+
+    //PLAYER TURN END  
+    public void PlayerTurnEnd()
+    {
         
     }
 
