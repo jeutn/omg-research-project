@@ -9,7 +9,7 @@ public class Deck : MonoBehaviour
     public static Deck Instance { get; private set;} //singleton
 
     //reference to the deck through cardcollection
-    [SerializeField] private CardCollection _playerDeck;
+    [SerializeField] private CardCollection _playerDeck; //represents card data to be instantiated - maybe change name 
     [SerializeField] private Card _cardPrefab;
     [SerializeField] private Canvas _cardCanvas;
     [SerializeField] private int halfSunCount = 20;

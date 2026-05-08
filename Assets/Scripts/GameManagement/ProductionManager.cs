@@ -82,7 +82,7 @@ public class ProductionManager : MonoBehaviour
     //method to confirm production - discard selected hand cards + resolves output and economies
     public void ConfirmProduction(Player player)
     {
-        //if production building doesnt exist, cast to proddata, then check if there isnt enough resources 
+        //if production building doesnt exist, can't cast to proddata, then check if there isnt enough resources 
         if (player.productionBuilding == null || player.productionBuilding.cardData is not ProdCardData prodData || !CanProduceWithSelected(player, player.productionBuilding))
         {
             Debug.Log("Cannot produce");

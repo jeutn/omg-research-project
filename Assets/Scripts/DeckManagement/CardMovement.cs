@@ -20,8 +20,6 @@ public class CardMovement : MonoBehaviour, IDragHandler, IEndDragHandler, IBegin
     }
 
 
-
-
     public void OnBeginDrag(PointerEventData eventData)
     {
         _isBeingDragged = true;

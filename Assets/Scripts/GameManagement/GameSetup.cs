@@ -39,7 +39,7 @@ public class GameSetup : MonoBehaviour
         //player.coins += ResourceCoinValues.Value[ResourceType.coal] * startingGoodsAmt;
 
         //3. draw 5 cards
-        Deck.Instance.DrawHand(player, 5); //is this right, deck.instance should be the single existing deck in the scene 
+        Deck.Instance.DrawHand(player, 5); 
         
     }
 
