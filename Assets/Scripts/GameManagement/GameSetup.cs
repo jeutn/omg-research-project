@@ -27,7 +27,6 @@ public class GameSetup : MonoBehaviour
 
         //2. receive 7 goods to charburner and 3. resources to coins
 
-        // player.goodsInventory[charburner.cardData.prodOutput] += startingGoodsAmt; // maybe have output connected to production building type, but each prod card should have the resource output as a property, can just look up type anyway 
         if (charburner.cardData is ProdCardData prodData)
         {
             player.goodsInventory[prodData.prodOutput] += startingGoodsAmt;
@@ -35,16 +34,15 @@ public class GameSetup : MonoBehaviour
         }
         //will have to do this for every production building...need to find another way...INTERFACES? 
 
-        //3. resources to coins
-        //player.coins += ResourceCoinValues.Value[ResourceType.coal] * startingGoodsAmt;
-
         //3. draw 5 cards
         Deck.Instance.DrawHand(player, 5); 
         
     }
 
-    private void ShuffleCharburners() //same as shuffle in deck, but charburners arent apart of main deck...
-    {
+    private void ShuffleCharburners() => GameUtils.FisherYates(charburners); //changed to using shuffle in library method 
+    
+    //same as shuffle in deck, but charburners arent apart of main deck...
+    /*{
         for (int i = charburners.Length - 1; i > 0; i--)
         {
             int j = Random.Range(0, i + 1);
@@ -52,7 +50,7 @@ public class GameSetup : MonoBehaviour
             charburners[i] = charburners[j];
             charburners[j]= temp;
         }
-    }
+    }*/
 
     private Card GetCharburner()
     {

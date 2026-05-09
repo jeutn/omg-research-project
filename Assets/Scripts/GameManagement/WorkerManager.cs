@@ -28,7 +28,7 @@ public class WorkerManager : MonoBehaviour
     //players choose a building by clicking - need to use OnClick 
     private void OnBuildingSelected(Player player, Card building)
     {
-        player.productionBuilding = building;
+        player.queuedBuilding = building;
         //maybe highlight the building selected (yellow border outline or something)
 
         // planning turn done for this player

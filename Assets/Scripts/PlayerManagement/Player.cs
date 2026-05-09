@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
     public int playerID;
     public List<Card> playerHand;
     public List<Card> buildingSite;
-    public Card productionBuilding;
+    public Card queuedBuilding;
     public int coins;
     //store # amount of each resource type player has 
     public Dictionary<ResourceType, int> goodsInventory = new Dictionary<ResourceType, int>(); //either create this with every resource at the start, or add to it every time they get a new resource 

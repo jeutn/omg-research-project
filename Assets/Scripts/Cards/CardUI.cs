@@ -137,18 +137,21 @@ public class CardUI : MonoBehaviour
         }
 
         //production chain text + sprites
-        if (data.productionChain != null && data.productionChain.Length > 0)
+        if (data.productionChain != ResourceType.none)
         {
-            _chainOneImg.sprite = GetResource(data.productionChain[0]);
+            _chainOneImg.sprite = GetResource(data.productionChain);
         } 
 
+        //SCOPE CHANGE - only one production chain input required 
+
+        /*
         if (data.productionChain != null && data.productionChain.Length > 1)
         {
             _chainTwoImg.sprite = GetResource(data.productionChain[1]);
         } else
         {
             _chainTwoImg.gameObject.SetActive(false);
-        }
+        }*/ 
 
         
     }

@@ -14,7 +14,7 @@ public class ProdCardData : CardData
         public int amount;
     }
     public ResourceAmts[] productionInput; 
-    public ResourceType[] productionChain;
+    public ResourceType productionChain;
 
 
 

@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
         currentPhase++;
 
         //update UI phase banner to show next phase title 
+
         switch (currentPhase)
         {
             case GamePhase.MarketOpen:

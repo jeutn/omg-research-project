@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Linq;
+using System.Collections.Generic;
 
 public class ProductionManager : MonoBehaviour
 {
@@ -7,38 +8,102 @@ public class ProductionManager : MonoBehaviour
 
     private int goodsProduced;
 
-    public void ResolveProduction(Player player, Card building)
+    public void ResolveProduction(Player player)
     {
-        DetermineGoodsAmt(player);
-        BaseProduction(player, building);
-        ProductionChain(player,building);
-        ResolveConstruction(player, player.productionBuilding); //make sure productionBuilding is not the building in the args, is this okay - or make public and call in game manager/phase manager 
+        //if production building doesnt exist, can't cast to proddata, then check if there isnt enough resources 
+        if (player.queuedBuilding == null || player.queuedBuilding.cardData is not ProdCardData prodData || !CanProduceWithSelected(player, player.queuedBuilding))
+        {
+            Debug.Log("Cannot produce");
+            //need to move on to next player
+            return;
+        }
+
+        //first resolve base production
+        goodsProduced = DetermineGoodsAmt(player);
+        BaseProduction(player, prodData);
+
+        //only if base production has occurred, then trigger production chain - HAVE UI where player can choose to proceed with production chain or not 
+        if (prodData.productionChain != ResourceType.none && CanChain(player, prodData))
+        {
+            //popup to ask if player wants to proceed with production chain 
+        }
+
+        ProductionChain(player, prodData); //empty method 
+        ResolveConstruction(player); 
         
     }
 
-    //STEP 1. BASE PRODUCTION
-    private void BaseProduction(Player player, Card building)
+    //STEP 1. BASE PRODUCTION - method to confirm production - discard selected hand cards + resolves output and economies
+    private void BaseProduction(Player player, ProdCardData building)
     {
         //1. consume resources based on worker mode 
         //2. add goods to player goods inventory
         //3. receive coins 
+
+        //if all conditions are met:
+        foreach (Card card in player.selectedResources)
+        {
+            player.playerHand.Remove(card);
+            Deck.Instance.DiscardCard(player, card);
+        }
+        
+        player.selectedResources.Clear();
+        player.goodsInventory[building.prodOutput] += goodsProduced;
+        player.coins += ResourceCoinValues.Value[building.prodOutput] * goodsProduced;
+        Debug.Log("successfully produced");
         
     }
 
     //STEP 2. PRODUCTION CHAIN 
-    private void ProductionChain(Player player, Card building)
+    //popup to ask player if they would like to proceed with production chain 
+    private void ProductionChain(Player player, ProdCardData building)
     {
-        //1. consume additional resources if conditions met
+        //1. consume additional resources if conditions met - for every additional/set of additional resources, produce extra goods
+        ResourceType chainResource = building.productionChain; 
+        int chainCount = AvailableResourceCount(player, chainResource); //count from hand and market
+        
+        List<Card> toDiscard = player.selectedResources
+        .Where(card => card.cardData.rawResource == chainResource)
+        .ToList(); //discard all matching selected cards
+
+        foreach (Card card in toDiscard)
+        {
+            player.playerHand.Remove(card);
+            Deck.Instance.DiscardCard(player, card);
+        }
+        player.selectedResources.Clear();
+
         //2. add goods to player goods inventory 
+        player.goodsInventory[building.prodOutput] += chainCount;
+    
         //3. receive coins 
+        player.coins += ResourceCoinValues.Value[building.prodOutput] * chainCount;
+        
+        //move to next turn - DO FOR ALL methods - ONLY CURRENTLY IN THIS ONE 
+        PhaseManager.Instance.PlayerTurnEnd();
     }
 
     //STEP 3. RESOLVE CONSTRUCTION
-    private void ResolveConstruction(Player player, Card building)
+    private void ResolveConstruction(Player player)
     {
         //1. if player has building queued
+        if (player.queuedBuilding == null) return;
+        CardData data = player.queuedBuilding.cardData;
+        
         //2. deduct coins/goods 
+        //how to pay with goods - player has visual stack of resources? then they must be scriptable objects then? - click buildings in hand and check the output 
+
+        // check player can afford it
+        if (player.coins < data.costToBuild) return;
+        // need to check which goods player wants to pay with 
+
+        //deduct costs
+        player.coins -= data.costToBuild;
+        //deduct goods from inventory 
+
         //3. move building to building site 
+        player.buildingSite.Add(player.queuedBuilding);
+        player.queuedBuilding = null;
     }
 
     //HELPER METHODS  
@@ -79,29 +144,6 @@ public class ProductionManager : MonoBehaviour
         return total;
     }
 
-    //method to confirm production - discard selected hand cards + resolves output and economies
-    public void ConfirmProduction(Player player)
-    {
-        //if production building doesnt exist, can't cast to proddata, then check if there isnt enough resources 
-        if (player.productionBuilding == null || player.productionBuilding.cardData is not ProdCardData prodData || !CanProduceWithSelected(player, player.productionBuilding))
-        {
-            Debug.Log("Cannot produce");
-            //need to move on to next player
-            return;
-        }
-
-        //if all conditions are met:
-        foreach (Card card in player.selectedResources)
-        {
-            player.playerHand.Remove(card);
-            Deck.Instance.DiscardCard(player, card);
-        }
-        player.selectedResources.Clear();
-        int amountProduced = DetermineGoodsAmt(player);
-        player.goodsInventory[prodData.prodOutput] += amountProduced;
-        player.coins += ResourceCoinValues.Value[prodData.prodOutput] * amountProduced;
-    }
-
     //method to pass production turn - if player chooses to forfeit their turn 
     public void PassProduction(Player player)
     {
@@ -110,6 +152,15 @@ public class ProductionManager : MonoBehaviour
     } 
 
     //method to minus 1 if worker mode is sloppy 
+
+    //method - check if production chain is eligible, ie player has resources or market display has resources  
+    private bool CanChain(Player player, ProdCardData prodData)
+    {
+        ResourceType chainResource = prodData.productionChain;
+        return AvailableResourceCount(player, chainResource) > 0;
+    } 
+
+    //method - resolve construction
 
     //at the end of production or round - RESET WORKER MODE TO DEFAULT
 

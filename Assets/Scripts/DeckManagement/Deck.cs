@@ -50,8 +50,8 @@ public class Deck : MonoBehaviour
     }
 
     //fisher yates
-    public void ShuffleDeck()
-    {
+    public void ShuffleDeck() => GameUtils.FisherYates(_deckPile); //switched to shuffle in library method 
+    /*{
         for (int i = _deckPile.Count - 1; i > 0; i--)
         {
             int j = UnityEngine.Random.Range(0, i+1);
@@ -60,7 +60,7 @@ public class Deck : MonoBehaviour
             _deckPile[j]= temp;
         }
         
-    }
+    }*/
 
     public Card DrawCard()
     {
@@ -76,7 +76,7 @@ public class Deck : MonoBehaviour
         return card;
     }
 
-    public void DrawHand(Player player, int amount) //discardpile only gets put back into main deck in this method...
+    public void DrawHand(Player player, int amount) //discardpile only gets put back into main deck in this method...need to separate out
     {
         for (int i = 0; i < amount; i++)
         {
@@ -110,7 +110,7 @@ public class Deck : MonoBehaviour
         }
     }
 
-    private void ApplyHalfSun()
+    private void ApplyHalfSun() //justify 
 {
     for (int i = 0; i < _deckPile.Count; i++)
     {
