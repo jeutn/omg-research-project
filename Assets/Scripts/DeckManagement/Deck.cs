@@ -9,7 +9,7 @@ public class Deck : MonoBehaviour
     public static Deck Instance { get; private set;} //singleton
 
     //reference to the deck through cardcollection
-    [SerializeField] private CardCollection _playerDeck; //represents card data to be instantiated - maybe change name 
+    [SerializeField] private CardCollection _cardDataCollection; //represents card data to be instantiated - maybe change name 
     [SerializeField] private Card _cardPrefab;
     [SerializeField] private Canvas _cardCanvas;
     [SerializeField] private int halfSunCount = 20;
@@ -37,10 +37,11 @@ public class Deck : MonoBehaviour
 
     private void InstantiateDeck()
     {
-        for (int i = 0; i < _playerDeck.CardsInCollection.Count; i++)
+        for (int i = 0; i < _cardDataCollection.CardsInCollection.Count; i++)
         {
             Card card = Instantiate(_cardPrefab, _cardCanvas.transform); //instantiates cardprefab as child of card canvas 
-            card.SetUp(_playerDeck.CardsInCollection[i]); //check this
+            card.cardLocation = CardLocation.Deck;
+            card.SetUp(_cardDataCollection.CardsInCollection[i]); //check this
             _deckPile.Add(card); //all cards in deck at the start, none in player hand or discard
             card.gameObject.SetActive(false);
             
@@ -96,6 +97,7 @@ public class Deck : MonoBehaviour
             card.owner = player;
             card.gameObject.SetActive(true);
             player.playerHand.Add(card);
+            card.cardLocation = CardLocation.Hand;
         }
 
     }
@@ -106,6 +108,7 @@ public class Deck : MonoBehaviour
         {
             player.playerHand.Remove(card);
             _discardPile.Add(card);
+            card.cardLocation = CardLocation.Discard;
             card.gameObject.SetActive(false);
         }
     }

@@ -15,6 +15,7 @@ public class MarketManager : MonoBehaviour
         {
             Card drawn = Deck.Instance.DrawCard();
             marketDisplay.Add(drawn);
+            drawn.cardLocation = CardLocation.Market;
 
             if (drawn.halfSun)
             {
@@ -33,5 +34,12 @@ public class MarketManager : MonoBehaviour
     public void ClearMarket()
     {
         //clears the market display 
+        foreach (Card card in marketDisplay)
+        {
+            card.cardLocation = CardLocation.Discard;
+            //Deck.Instance.DiscardCard(card);
+        }
+
+        marketDisplay.Clear(); //need to add to discard pile first 
     }
 }

@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     // public List<Player> players; - Maybe add players to a list instead of having only 2 
 
     // public Player CurrentPlayer; - Maybe use a currentPlayer tracker instead of doing player1, then player2? 
+    public int numOfRounds; 
 
     private void Awake()
     {
@@ -61,27 +62,18 @@ public class GameManager : MonoBehaviour
                 break; 
 
             case GamePhase.GameEnd:
-                GameEnd();
+                PhaseManager.Instance.GameEnd();
                 break;
 
 
         }
 
-
-
-
     }
 
     public void PassTurn()
     {
-        //player passes turn 
+        //player passes turn button 
 
-    }
-
-    public void GameEnd()
-    {
-        //clear everything, reset deck
-        //method for tallying winner points 
     }
 
 

@@ -10,19 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c4053dfb2895445858666dd9a459fadf, type: 3}
-  m_Name: test
+  m_Name: tannery1
   m_EditorClassIdentifier: Assembly-CSharp::ProdCardData
-  cardID: 0
+  cardID: 80
   cardType: 0
-  rawResource: 2
-  cardName: Cafe
-  costToBuild: 2
+  rawResource: 1
+  cardName: Tannery
+  costToBuild: 15
   victoryPoints: 3
-  prodOutput: 14
-  goodsvalue: 0
+  prodOutput: 17
+  goodsvalue: 6
   productionInput:
-  - type: 5
-    amount: 3
   - type: 3
     amount: 2
-  productionChain: 7
+  - type: 4
+    amount: 3
+  productionChain: 9

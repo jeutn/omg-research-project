@@ -3,6 +3,8 @@ using UnityEngine;
 public class WorkerManager : MonoBehaviour
 {
     public static WorkerManager Instance {get; private set;}
+    public int efficientGoods = 2;
+    public int sloppyGoods = 1;
 
     //method to show worker selection in UIManager, players need to click on which worker they want, then call OnBuildingSelected to attach to specific building 
 
@@ -21,7 +23,11 @@ public class WorkerManager : MonoBehaviour
         // now player selects which building to activate - building site now available to interact with
     }
 
-
+    //default to be efficient worker 
+    public void DefaultWorkerSelection(Player player)
+    {
+        OnWorkerSelected(player, WorkerMode.Efficient);
+    }
 
 
 

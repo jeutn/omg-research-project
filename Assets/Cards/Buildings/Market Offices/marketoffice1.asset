@@ -12,13 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc9febfbffab04aa397005f045a1913d, type: 3}
   m_Name: marketoffice1
   m_EditorClassIdentifier: Assembly-CSharp::MarketCardData
-  cardID: 0
+  cardID: 83
   cardType: 1
   rawResource: 3
   cardName: Market Office
   costToBuild: 8
   victoryPoints: 3
-  halfSun: 0
   bonusResource: 0
   cardEffectType: 0
   extraCards: 1
