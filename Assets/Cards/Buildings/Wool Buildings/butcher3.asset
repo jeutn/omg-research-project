@@ -18,7 +18,6 @@ MonoBehaviour:
   cardName: Butcher
   costToBuild: 12
   victoryPoints: 4
-  halfSun: 0
   prodOutput: 18
   goodsvalue: 7
   productionInput:
@@ -26,4 +25,4 @@ MonoBehaviour:
     amount: 4
   - type: 2
     amount: 2
-  productionChain: 09000000
+  productionChain: 9

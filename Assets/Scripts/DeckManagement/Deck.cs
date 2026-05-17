@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
@@ -12,7 +11,7 @@ public class Deck : MonoBehaviour
     [SerializeField] private CardCollection _cardDataCollection; //represents card data to be instantiated - maybe change name 
     [SerializeField] private Card _cardPrefab;
     [SerializeField] private Canvas _cardCanvas;
-    [SerializeField] private int halfSunCount = 20;
+    [SerializeField] private int halfSunCount = 40;
 
     //represent instantiated cards
     private List<Card> _deckPile = new();
@@ -63,11 +62,14 @@ public class Deck : MonoBehaviour
         
     }*/
 
+    //draws one card at a time 
     public Card DrawCard()
     {
-        if (_deckPile.Count == 0)
+        if (_deckPile.Count <= 0) //no more cards in deck 
         {
-            return null;
+            _deckPile.AddRange(_discardPile);
+            _discardPile.Clear();
+            ShuffleDeck();
         }
 
         Card card = _deckPile[0];
@@ -77,47 +79,51 @@ public class Deck : MonoBehaviour
         return card;
     }
 
-    public void DrawHand(Player player, int amount) //discardpile only gets put back into main deck in this method...need to separate out
+    //draws multiple cards into player hand 
+    public void DrawHand(Player player, int amount)
     {
         for (int i = 0; i < amount; i++)
         {
-            if (_deckPile.Count <= 0)
-            {
-                if (_discardPile.Count <= 0) break; //no cards anywhere, stop drawing
-                {
-                    _deckPile.AddRange(_discardPile);
-                    _discardPile.Clear();
-                    ShuffleDeck();
-                }
-            }
-
-            Card card = _deckPile[0];
-            _deckPile.RemoveAt(0);
+            Card card = DrawCard();
+            if (card == null) break;
 
             card.owner = player;
-            card.gameObject.SetActive(true);
-            player.playerHand.Add(card);
             card.cardLocation = CardLocation.Hand;
+            player.playerHand.Add(card);
+
+            // parent to correct hand area
+            Transform handArea = UIManager.Instance.GetHandArea(player);
+            if (handArea != null)
+                card.transform.SetParent(handArea, false);
+            
         }
 
     }
 
-    public void DiscardCard(Player player, Card card)
+    //wrapper for button
+    public void DrawHandButton()
     {
-        if (player.playerHand.Contains(card))
-        {
-            player.playerHand.Remove(card);
+        //DrawHand(GameManager.Instance.'CURRENTPLAYER', 2);
+    }
+
+    public void DrawPrepCardsButton() //should just use drawhand, and create variables for how many cards in phasemanager or gamemanager 
+    {
+        DrawHand(GameManager.Instance.currentPlayer, 2);
+        PhaseManager.Instance.PlayerTurnEnd();
+    }
+
+    public void DiscardCard(Card card)
+    {
             _discardPile.Add(card);
             card.cardLocation = CardLocation.Discard;
             card.gameObject.SetActive(false);
-        }
     }
 
     private void ApplyHalfSun() //justify 
 {
     for (int i = 0; i < _deckPile.Count; i++)
     {
-        _deckPile[i].halfSun = i < halfSunCount;
+        _deckPile[i].cardData.halfSun = i < halfSunCount;
     }
 }
 }

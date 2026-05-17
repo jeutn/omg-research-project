@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PhaseManager : MonoBehaviour
@@ -7,6 +8,26 @@ public class PhaseManager : MonoBehaviour
     public int CoinToVPConversion = 5;
 
     public static PhaseManager Instance { get; private set; }
+
+    private List<Player> _turnOrder = new();
+    private int _currentPlayerIndex = 0; 
+    public Player CurrentPlayer => _turnOrder[_currentPlayerIndex];
+
+    public void Awake()
+    {
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
+    }
+
+    //setup player turn order 
+    public void SetTurnOrder()
+    {
+        _turnOrder.Clear();
+        _turnOrder.Add(GameManager.Instance.player1);
+        _turnOrder.Add(GameManager.Instance.player2);
+        _currentPlayerIndex = 0;
+        UIManager.Instance.UpdateTurnBanner(CurrentPlayer);
+    }
 
     //PHASE 1: PREPARATION - MARKET OPEN
     public void RunPreparation()
@@ -37,24 +58,45 @@ public class PhaseManager : MonoBehaviour
         //run production logic
         ProductionManager.Instance.ResolveProduction(GameManager.Instance.player1); //p1 and p2 will show at the same time with this code...do i want a delay, also would it be better to use a currentPlayer index that cycles through rather than coding for p1/p2 each time
         ProductionManager.Instance.ResolveProduction(GameManager.Instance.player2); //can move to phasemanager and call runProduction
-        ProductionManager.Instance.EndProduction(GameManager.Instance.player1); //cleanup phase 4
-        ProductionManager.Instance.EndProduction(GameManager.Instance.player2); //cleanup phase 4
-
-    }
-
-    //CLEAN UP
-    public void CleanUp()
-    {
-        MarketManager.Instance.ClearMarket();
-        GameManager.Instance.NextPhase();
-        //RESET WORKER MODE TO DEFAULT 
-        
     }
 
     //PLAYER TURN END  
     public void PlayerTurnEnd()
     {
+        _currentPlayerIndex++;
+
+        if (_currentPlayerIndex >= _turnOrder.Count)
+        {
+            _currentPlayerIndex = 0;
+            GameManager.Instance.NextPhase();
+        } 
+        else
+        {
+            UIManager.Instance.UpdateTurnBanner(CurrentPlayer);
+            if (GameManager.Instance.currentPhase == GamePhase.Setup)
+            {
+                UIManager.Instance.ShowSetupPanel(CurrentPlayer);
+            }
+        }
         
+    }
+
+    //ROUND END 
+    public void RoundEnd()
+    {
+        MarketManager.Instance.ClearMarket();
+        ResetPlayer(GameManager.Instance.player1);
+        ResetPlayer(GameManager.Instance.player2);
+        GameManager.Instance.NextPhase();
+    }
+
+    public void ResetPlayer(Player player)
+    {
+        //resets everything temporary 
+        player.productionBuilding = null;
+        player.workerMode = WorkerMode.Default;
+        player.queuedBuilding = null;
+
     }
 
     //ENDGAME METHODS

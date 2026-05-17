@@ -18,7 +18,6 @@ MonoBehaviour:
   cardName: Window Manufacture
   costToBuild: 9
   victoryPoints: 3
-  halfSun: 0
   prodOutput: 22
   goodsvalue: 5
   productionInput:
@@ -26,4 +25,4 @@ MonoBehaviour:
     amount: 2
   - type: 1
     amount: 3
-  productionChain: 130000000f000000
+  productionChain: 19

@@ -26,4 +26,4 @@ MonoBehaviour:
     amount: 2
   - type: 4
     amount: 1
-  productionChain: 04000000
+  productionChain: 4

@@ -4,63 +4,74 @@ using UnityEngine;
 public class GameSetup : MonoBehaviour
 {
     public static GameSetup Instance;
-    public ProdCardData[] charburners; //need to add players + gamesetup to canvas, then will show in inspector 
+    public ProdCardData[] charburners;
     private int startingGoodsAmt = 7;
     private int _charburnerIndex = 0;
 
     [SerializeField] private Card _cardPrefab;
     [SerializeField] private Canvas _cardCanvas;
+    [SerializeField] private Transform player1BuildingSite;
+    [SerializeField] private Transform player2BuildingSite;
 
-    public void StartGameSetup()
+    private void Awake()
     {
         ShuffleCharburners();
-        SetupPlayer(GameManager.Instance.player1);
-        SetupPlayer(GameManager.Instance.player2);
-        Debug.Log("Game setup done");
-    }
-
-    private void SetupPlayer(Player player) //DOESNT SHOW IN UI JUST YET
-    {
-        //1. add charburner
-        Card charburner = GetCharburner();
-        player.buildingSite.Add(charburner);
-
-        //2. receive 7 goods to charburner and 3. resources to coins
-
-        if (charburner.cardData is ProdCardData prodData)
-        {
-            player.goodsInventory[prodData.prodOutput] += startingGoodsAmt;
-            player.coins += ResourceCoinValues.Value[prodData.prodOutput] * startingGoodsAmt;
-        }
-        //will have to do this for every production building...need to find another way...INTERFACES? 
-
-        //3. draw 5 cards
-        Deck.Instance.DrawHand(player, 5); 
-        
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
     }
 
     private void ShuffleCharburners() => GameUtils.FisherYates(charburners); //changed to using shuffle in library method 
     
-    //same as shuffle in deck, but charburners arent apart of main deck...
-    /*{
-        for (int i = charburners.Length - 1; i > 0; i--)
-        {
-            int j = Random.Range(0, i + 1);
-            var temp = charburners[i];
-            charburners[i] = charburners[j];
-            charburners[j]= temp;
-        }
-    }*/
 
-    private Card GetCharburner()
+    //button #1 - called by set up player x button
+    public void DealCharburner()
     {
-        return InstantiateCharburner(charburners[_charburnerIndex++]);
+        Debug.Log($"Charburner index: {_charburnerIndex}, array length: {charburners.Length}");
+    
+        if (charburners == null || charburners.Length == 0)
+        {
+            Debug.LogError("No charburners assigned in inspector");
+            return;
+        }
+        //deal charburners into building site 
+        Player player = GameManager.Instance.currentPlayer;
+        Transform buildingSite = player == GameManager.Instance.player1 
+        ? player1BuildingSite 
+        : player2BuildingSite;
+
+        Card charburner = InstantiateCharburner(charburners[_charburnerIndex++], buildingSite);
+        player.buildingSite.Add(charburner);
+
+        if (charburner.cardData is ProdCardData prodCardData)
+        {
+            player.goodsInventory[prodCardData.prodOutput] += startingGoodsAmt;
+            player.coins += ResourceCoinValues.Value[prodCardData.prodOutput] * startingGoodsAmt;
+        }
+
+        Debug.Log("Charburner dealt to player: " + player.playerID);
+        // show the next button
+        UIManager.Instance.ShowDrawCardsButton();
     }
 
-    private Card InstantiateCharburner(CardData cardData)
+    public void DrawStartingHand()
     {
-            Card card = Instantiate(_cardPrefab, _cardCanvas.transform); //instantiates cardprefab as child of card canvas 
+        Player player = GameManager.Instance.currentPlayer;
+        Deck.Instance.DrawHand(player, 5);
+
+        // show finish setup button
+        UIManager.Instance.ShowFinishSetupButton();
+    }
+
+    public void FinishSetup()
+    {
+        PhaseManager.Instance.PlayerTurnEnd();
+    }
+
+    private Card InstantiateCharburner(CardData cardData, Transform parent)
+    {
+            Card card = Instantiate(_cardPrefab, parent); //instantiates cardprefab as child of card canvas 
             card.SetUp(cardData); 
+            card.cardLocation = CardLocation.BuildingSite;
             return card;
  
 

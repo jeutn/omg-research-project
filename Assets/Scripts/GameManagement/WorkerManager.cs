@@ -6,6 +6,12 @@ public class WorkerManager : MonoBehaviour
     public int efficientGoods = 2;
     public int sloppyGoods = 1;
 
+    private void Awake()
+    {
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
+    }
+
     //method to show worker selection in UIManager, players need to click on which worker they want, then call OnBuildingSelected to attach to specific building 
 
     //method if default -> choose efficient worker 

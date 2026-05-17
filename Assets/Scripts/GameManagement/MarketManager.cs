@@ -5,30 +5,36 @@ public class MarketManager : MonoBehaviour
 {
     public static MarketManager Instance { get; private set; }
     public List<Card> marketDisplay = new();
-    private int maxHalfSuns = 2;
+    private int _halfSunsCount = 0;
+    private int _maxHalfSuns = 2;
+
+    private void Awake()
+    {
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
+    }
 
     public void DrawUntilSun()
     {
-        int halfSunsCount = 0;
-        //. draw until maxHalfSuns are met 
-        while (halfSunsCount < maxHalfSuns)
-        {
-            Card drawn = Deck.Instance.DrawCard();
-            marketDisplay.Add(drawn);
-            drawn.cardLocation = CardLocation.Market;
+        Card card = Deck.Instance.DrawCard();
+        if (card == null) return;
+        card.cardLocation = CardLocation.Market;
+        marketDisplay.Add(card);
 
-            if (drawn.halfSun)
-            {
-                halfSunsCount++;
-            }
-            
+        //. draw until maxHalfSuns are met 
+        if (card.cardData.halfSun)
+        {
+            _halfSunsCount++;
+            //UIManager.Instance.UpdateHalfSunCount(_halfSunCount);
+            if (_halfSunsCount >= _maxHalfSuns) MarketFullSun();
         }
+
     }
 
-    public bool ResourceAvailable()
+    public void MarketFullSun()
     {
-        //checks if resource is available
-        return true;
+        _halfSunsCount = 0; //reset for next phase 
+        GameManager.Instance.NextPhase();
     }
 
     public void ClearMarket()
@@ -37,9 +43,9 @@ public class MarketManager : MonoBehaviour
         foreach (Card card in marketDisplay)
         {
             card.cardLocation = CardLocation.Discard;
-            //Deck.Instance.DiscardCard(card);
+            Deck.Instance.DiscardCard(card);
         }
 
-        marketDisplay.Clear(); //need to add to discard pile first 
+        marketDisplay.Clear(); 
     }
 }

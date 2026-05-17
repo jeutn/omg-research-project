@@ -18,7 +18,6 @@ MonoBehaviour:
   cardName: Iron Smelter
   costToBuild: 9
   victoryPoints: 2
-  halfSun: 0
   prodOutput: 16
   goodsvalue: 3
   productionInput:
@@ -26,4 +25,4 @@ MonoBehaviour:
     amount: 2
   - type: 4
     amount: 2
-  productionChain: 0b00000003000000
+  productionChain: 3

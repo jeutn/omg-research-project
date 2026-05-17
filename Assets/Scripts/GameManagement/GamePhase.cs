@@ -3,11 +3,12 @@ using UnityEngine;
 public enum GamePhase
 {
     Setup,
+    RoundOpen,
     MarketOpen,
     Planning,
     MarketClose,
     Production,
-    Cleanup,
+    RoundEnd,
     GameEnd
 }
 

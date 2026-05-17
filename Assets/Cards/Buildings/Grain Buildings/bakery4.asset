@@ -18,12 +18,12 @@ MonoBehaviour:
   cardName: Bakery
   costToBuild: 9
   victoryPoints: 3
-  halfSun: 0
-  prodOutput: 0
+  halfSun: 1
+  prodOutput: 7
   goodsvalue: 4
   productionInput:
   - type: 2
     amount: 3
   - type: 1
     amount: 2
-  productionChain: 0b0000000d000000
+  productionChain: 11

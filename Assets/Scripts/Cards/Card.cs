@@ -9,9 +9,6 @@ public class Card : MonoBehaviour
     
     public CardData cardData;
     public CardLocation cardLocation;
-    public bool usedAsResource;
-    public bool isBuilt;
-    public bool halfSun;
 
     public void SetUp(CardData data)
     {

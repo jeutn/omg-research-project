@@ -18,7 +18,6 @@ MonoBehaviour:
   cardName: Food Factory
   costToBuild: 21
   victoryPoints: 5
-  halfSun: 0
   prodOutput: 14
   goodsvalue: 8
   productionInput:
@@ -26,4 +25,4 @@ MonoBehaviour:
     amount: 4
   - type: 1
     amount: 2
-  productionChain: 0e000000
+  productionChain: 7

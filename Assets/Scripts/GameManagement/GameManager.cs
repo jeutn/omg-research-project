@@ -4,30 +4,27 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance {get; private set;}
     public GamePhase currentPhase {get; private set;}
-    public PlayerTurn currentTurn {get; private set;}
-    public Player player1;
-    public Player player2;
-    // public List<Player> players; - Maybe add players to a list instead of having only 2 
+    public Player currentPlayer => PhaseManager.Instance.CurrentPlayer;
+    [SerializeField] public Player player1;
+    [SerializeField] public Player player2;
 
-    // public Player CurrentPlayer; - Maybe use a currentPlayer tracker instead of doing player1, then player2? 
-    public int numOfRounds; 
+    private int currentRound = 0;
+    private int numOfRounds = 7; 
 
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        } else
-        {
-            Destroy(gameObject);
-        }
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
     }
 
     public void StartGame()
     {
         currentPhase = GamePhase.Setup;
-        currentTurn = PlayerTurn.player1;
-        GameSetup.Instance.StartGameSetup();
+        PhaseManager.Instance.SetTurnOrder();
+        
+        UIManager.Instance.UpdateTurnBanner(currentPlayer);
+        UIManager.Instance.ShowPanel(UIManager.Instance.gameSetupPanel);
+        UIManager.Instance.ShowSetupPanel(currentPlayer);
         
     }
 
@@ -40,6 +37,13 @@ public class GameManager : MonoBehaviour
 
         switch (currentPhase)
         {
+            case GamePhase.RoundOpen:
+                //draw 2 cards - PREP PANEL DOESNT EXIST RN 
+                PhaseManager.Instance.SetTurnOrder();
+                UIManager.Instance.ShowPanel(UIManager.Instance.preparationPanel);
+                UIManager.Instance.UpdateTurnBanner(currentPlayer);
+                break;
+
             case GamePhase.MarketOpen:
                 MarketManager.Instance.DrawUntilSun();
                 break;
@@ -56,8 +60,9 @@ public class GameManager : MonoBehaviour
                 PhaseManager.Instance.RunProduction();
                 break;
 
-            case GamePhase.Cleanup:
-                PhaseManager.Instance.CleanUp(); //do i really need a phase manager, i can just call marketmanager.instance.clearmarket() here...
+            case GamePhase.RoundEnd:
+                PhaseManager.Instance.RoundEnd();
+
                 //banner updates round number++
                 break; 
 
@@ -67,6 +72,21 @@ public class GameManager : MonoBehaviour
 
 
         }
+
+    }
+
+    public void AdvanceRound()
+    {
+        currentRound++;
+        if (currentRound >= numOfRounds)
+        {
+            //game end panel
+            currentPhase = GamePhase.GameEnd;
+            PhaseManager.Instance.GameEnd();
+            return;
+        }
+        currentPhase = GamePhase.RoundOpen;
+        NextPhase();
 
     }
 

@@ -19,11 +19,11 @@ MonoBehaviour:
   costToBuild: 12
   victoryPoints: 3
   halfSun: 0
-  prodOutput: 0
+  prodOutput: 7
   goodsvalue: 4
   productionInput:
   - type: 4
     amount: 3
   - type: 5
     amount: 2
-  productionChain: 0b0000000d000000
+  productionChain: 13

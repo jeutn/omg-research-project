@@ -99,7 +99,7 @@ public class CardUI : MonoBehaviour
         _vpValue.gameObject.SetActive(card.cardData.victoryPoints > 0);
 
         //shows sun if true
-        _halfSun.gameObject.SetActive(card.halfSun);  
+        _halfSun.gameObject.SetActive(card.cardData.halfSun);  
         
         //split into production and market card setup
         if (card.cardData is ProdCardData prodCardData)
