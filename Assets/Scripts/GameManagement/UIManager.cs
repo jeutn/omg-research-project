@@ -23,6 +23,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI turnBannerText;
 
     [SerializeField] private TextMeshProUGUI phaseBannerText;
+	[SerializeField] private TextMeshProUGUI instructionBannerText;
     [SerializeField] private TextMeshProUGUI halfSunCountText;
     [SerializeField] private TextMeshProUGUI winnerText;
 
@@ -37,6 +38,31 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Transform player2Hand;
 
 	private GameObject _currentPanel;
+
+	//STARTMENUPANEL
+	
+	//ROUND CUSTOMIER
+	[SerializeField] private TextMeshProUGUI roundCountText;
+	private int _selectedRounds = 7;
+	private int _minRounds = 4;
+	private int _maxRounds = 12;
+
+	//PLANNING DECISIONS
+	[Header("Worker UI")]
+	[SerializeField] private GameObject workerSelectionObject;
+	[SerializeField] private TextMeshProUGUI worker1BannerText;
+	[SerializeField] private TextMeshProUGUI worker2BannerText;
+
+	//PLAYER STATS
+	[Header("Player Stats")]
+	[SerializeField] private TextMeshProUGUI player1CoinsText;
+	[SerializeField] private TextMeshProUGUI player2CoinsText;
+
+	public void RefreshCoins()
+	{
+		player1CoinsText.text = $"P1 Coins: {GameManager.Instance.player1.coins}";
+		player2CoinsText.text = $"P2 Coins: {GameManager.Instance.player2.coins}";
+	}
 
     private void Awake()
 	{
@@ -58,6 +84,10 @@ public class UIManager : MonoBehaviour
 		
 		_currentPanel = startMenuPanel;
 		startMenuPanel.SetActive(true); // only show start menu on launch
+
+		//set worker banners 
+		worker1BannerText.text = "P1 Worker: -";
+		worker2BannerText.text = "P2 Worker: -";
 	}
 
 	//SETUP MENUS
@@ -75,6 +105,13 @@ public class UIManager : MonoBehaviour
 		setupPlayerButton.SetActive(true);
 		drawCardsButton.SetActive(false);
 		finishSetupButton.SetActive(false);
+
+		// hide hands
+    	SetHandFaceDown(GameManager.Instance.player1, true);
+		SetHandFaceDown(GameManager.Instance.player2, true);
+
+    	// only show current player hand
+    	SetHandFaceDown(player, false);
 
 		UpdateTurnBanner(player);
 	}
@@ -107,17 +144,59 @@ public class UIManager : MonoBehaviour
         phaseBannerText.text = $"Current phase: {GameManager.Instance.currentPhase}";
     }
 
-    /*public void UpdateUI(GamePhase phase, PlayerTurn turn)
-        {
-            UpdatePanels(turn);
-            UpdatePhaseUI(phase);
-        }
+	//ROUND CUSTOMISER
+	public void AddRounds()
+	{
+		if (_selectedRounds < _maxRounds)
+		{
+			_selectedRounds++;
+			roundCountText.text = $"Rounds: {_selectedRounds}";
+		}
+	}
 
-    private void UpdatePanels(PlayerTurn turn)
-        {
-            player1Hand.SetActive(turn == PlayerTurn.player1);
-            player2Hand.SetActive(turn == PlayerTurn.player2); //either use PlayerTurn enums or use the currentPlayerIndex system...
-        }*/
+	public void SubtractRounds()
+	{
+		if (_selectedRounds > _minRounds)
+		{
+			_selectedRounds--;
+			roundCountText.text = $"Rounds: {_selectedRounds}";
+		}
+	}
+
+	public int GetSelectedRounds() => _selectedRounds;
+
+	//CARD BACKING
+	public void SetHandFaceDown(Player player, bool faceDown)
+	{
+		foreach (Card card in player.playerHand)
+		{
+			card.GetComponent<CardUI>().SetFaceDown(faceDown);
+		}
+	}
+
+	//WORKER UI METHODS
+
+	public void ShowWorkerSelection()
+	{
+		workerSelectionObject.SetActive(true);
+	}
+
+	public void HideWorkerSelection()
+	{
+		workerSelectionObject.SetActive(false);
+	}
+
+	public void UpdateWorkerBanner(Player player)
+	{
+		if (player == GameManager.Instance.player1)
+			worker1BannerText.text = $"P1 Worker: {player.workerMode}";
+		else
+			worker2BannerText.text = $"P2 Worker: {player.workerMode}";
+
+		//RESET
+		//worker1BannerText.text = "P1 Worker: -";
+		//worker2BannerText.text = "P2 Worker: -";
+	}
 
     private void UpdatePhaseUI(GamePhase phase)
         {

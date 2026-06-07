@@ -7,6 +7,7 @@ public class MarketManager : MonoBehaviour
     public List<Card> marketDisplay = new();
     private int _halfSunsCount = 0;
     private int _maxHalfSuns = 2;
+    [SerializeField] private Transform marketArea;
 
     private void Awake()
     {
@@ -18,15 +19,20 @@ public class MarketManager : MonoBehaviour
     {
         Card card = Deck.Instance.DrawCard();
         if (card == null) return;
+
         card.cardLocation = CardLocation.Market;
         marketDisplay.Add(card);
+        card.transform.SetParent(marketArea, false);
 
-        //. draw until maxHalfSuns are met 
         if (card.cardData.halfSun)
         {
             _halfSunsCount++;
-            //UIManager.Instance.UpdateHalfSunCount(_halfSunCount);
-            if (_halfSunsCount >= _maxHalfSuns) MarketFullSun();
+            if (_halfSunsCount >= _maxHalfSuns)
+            {
+                _halfSunsCount = 0;
+                GameManager.Instance.NextPhase();
+                return; // stop here when 2 half suns appear, move to next phase 
+            }
         }
 
     }
@@ -35,6 +41,10 @@ public class MarketManager : MonoBehaviour
     {
         _halfSunsCount = 0; //reset for next phase 
         GameManager.Instance.NextPhase();
+        if (GameManager.Instance.currentPhase == GamePhase.MarketOpen)
+        {
+            UIManager.Instance.ShowPanel(UIManager.Instance.planningPanel);
+        }
     }
 
     public void ClearMarket()

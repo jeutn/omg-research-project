@@ -18,6 +18,7 @@ MonoBehaviour:
   cardName: Market Office
   costToBuild: 8
   victoryPoints: 3
+  halfSun: 1
   bonusResource: 0
   cardEffectType: 0
   extraCards: 1

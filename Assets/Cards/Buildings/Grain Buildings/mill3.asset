@@ -18,6 +18,7 @@ MonoBehaviour:
   cardName: Mill
   costToBuild: 4
   victoryPoints: 2
+  halfSun: 1
   prodOutput: 13
   goodsvalue: 2
   productionInput:

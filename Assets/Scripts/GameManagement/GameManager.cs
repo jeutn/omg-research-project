@@ -19,36 +19,38 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
+        numOfRounds = UIManager.Instance.GetSelectedRounds();
         currentPhase = GamePhase.Setup;
+        UIManager.Instance.UpdatePhaseBanner();
         PhaseManager.Instance.SetTurnOrder();
         
         UIManager.Instance.UpdateTurnBanner(currentPlayer);
         UIManager.Instance.ShowPanel(UIManager.Instance.gameSetupPanel);
-        UIManager.Instance.ShowSetupPanel(currentPlayer);
-        
+        UIManager.Instance.ShowSetupPanel(currentPlayer);        
     }
 
     public void NextPhase()
     {
         //move to next phase, currentphase ++
         currentPhase++;
+        UIManager.Instance.UpdatePhaseBanner();
 
         //update UI phase banner to show next phase title 
 
         switch (currentPhase)
         {
             case GamePhase.RoundOpen:
-                //draw 2 cards - PREP PANEL DOESNT EXIST RN 
                 PhaseManager.Instance.SetTurnOrder();
                 UIManager.Instance.ShowPanel(UIManager.Instance.preparationPanel);
                 UIManager.Instance.UpdateTurnBanner(currentPlayer);
                 break;
 
             case GamePhase.MarketOpen:
-                MarketManager.Instance.DrawUntilSun();
+                PhaseManager.Instance.RunPreparation();
                 break;
 
             case GamePhase.Planning:
+                UIManager.Instance.ShowPanel(UIManager.Instance.planningPanel);
                 //planning methods for player choosing building, worker mode, lock in decisions for this round 
                 break;
 

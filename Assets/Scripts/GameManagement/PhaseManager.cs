@@ -37,12 +37,16 @@ public class PhaseManager : MonoBehaviour
                                 MarketOfficeManager.Instance.ExtraDrawCount(GameManager.Instance.player1));
         Deck.Instance.DrawHand(GameManager.Instance.player2, 
                         MarketOfficeManager.Instance.ExtraDrawCount(GameManager.Instance.player2));
+
+        MarketManager.Instance.DrawUntilSun();
         
     }
 
     //PHASE 2: PLANNING - PLAYER DECISIONS
     public void RunPlanning()
     {
+        //player 1 - choose worker mode (need select/deselect cards, goods: 0 at top, coins)
+        UIManager.Instance.ShowWorkerSelection();
         
     }
 
@@ -69,15 +73,25 @@ public class PhaseManager : MonoBehaviour
         {
             _currentPlayerIndex = 0;
             GameManager.Instance.NextPhase();
-        } 
-        else
-        {
-            UIManager.Instance.UpdateTurnBanner(CurrentPlayer);
-            if (GameManager.Instance.currentPhase == GamePhase.Setup)
-            {
-                UIManager.Instance.ShowSetupPanel(CurrentPlayer);
-            }
+            return; 
         }
+
+        UIManager.Instance.UpdateTurnBanner(CurrentPlayer);
+
+        // PHASE-SPECIFIC UI 
+        if (GameManager.Instance.currentPhase == GamePhase.Setup)
+        {
+            UIManager.Instance.ShowSetupPanel(CurrentPlayer);
+        }
+        // GLOBAL RULE: only current player sees their hand
+        if (GameManager.Instance.currentPhase != GamePhase.Planning)
+        {
+            UIManager.Instance.SetHandFaceDown(GameManager.Instance.player1, true);
+            UIManager.Instance.SetHandFaceDown(GameManager.Instance.player2, true);
+            UIManager.Instance.SetHandFaceDown(CurrentPlayer, false);
+            
+        }
+
         
     }
 
@@ -119,6 +133,19 @@ public class PhaseManager : MonoBehaviour
             return null;
         }
         return player1.coins > player2.coins ? player1 : player2;
+    }
+
+    //ROUND OPEN HELPER METHODS
+    public void DrawRoundOpenButton()
+    {
+        //Player player = GameManager.Instance.currentPlayer;
+        Deck.Instance.DrawHand(GameManager.Instance.player1, 2);
+        UIManager.Instance.SetHandFaceDown(GameManager.Instance.player1, true);
+        Deck.Instance.DrawHand(GameManager.Instance.player2, 2);
+        UIManager.Instance.SetHandFaceDown(GameManager.Instance.player2, true);
+        
+        UIManager.Instance.ShowPanel(UIManager.Instance.sunrisePanel);
+        GameManager.Instance.NextPhase();
     }
 
 }

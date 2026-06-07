@@ -15,18 +15,38 @@ public class WorkerManager : MonoBehaviour
     //method to show worker selection in UIManager, players need to click on which worker they want, then call OnBuildingSelected to attach to specific building 
 
     //method if default -> choose efficient worker 
-    public void ShowWorkerSelection(Player player) //ui method
+	// called by Efficient button
+    public void SelectEfficient()
     {
-        //while worker popup is active, everything else should be frozen 
-        //banner to show which player turn it is 
+        Player player = GameManager.Instance.currentPlayer;
+        OnWorkerSelected(player, WorkerMode.Efficient);
+    }
+
+    // called by Sloppy button
+    public void SelectSloppy()
+    {
+        Player player = GameManager.Instance.currentPlayer;
+        OnWorkerSelected(player, WorkerMode.Sloppy);
     }
 
     private void OnWorkerSelected(Player player, WorkerMode mode)
     {
         player.workerMode = mode;
-        //UI to hide the worker selection popup 
+        UIManager.Instance.UpdateWorkerBanner(player);
 
-        // now player selects which building to activate - building site now available to interact with
+        // check if both players have chosen
+        if (GameManager.Instance.player1.workerMode != WorkerMode.Default &&
+            GameManager.Instance.player2.workerMode != WorkerMode.Default)
+        {
+            // both done — hide popup and begin building selection
+            UIManager.Instance.HideWorkerSelection();
+            //BeginBuildingSelection();
+        }
+        else
+        {
+            // advance to next player for worker selection
+            PhaseManager.Instance.PlayerTurnEnd();
+        }
     }
 
     //default to be efficient worker 

@@ -18,6 +18,7 @@ MonoBehaviour:
   cardName: Brick Manufacture
   costToBuild: 2
   victoryPoints: 2
+  halfSun: 1
   prodOutput: 8
   goodsvalue: 2
   productionInput:

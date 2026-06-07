@@ -18,6 +18,7 @@ MonoBehaviour:
   cardName: Cooperage
   costToBuild: 11
   victoryPoints: 3
+  halfSun: 1
   prodOutput: 6
   goodsvalue: 5
   productionInput:

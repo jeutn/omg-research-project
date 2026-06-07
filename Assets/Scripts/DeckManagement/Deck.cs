@@ -46,7 +46,6 @@ public class Deck : MonoBehaviour
             
         }
         ShuffleDeck();
-        ApplyHalfSun();
     }
 
     //fisher yates
@@ -119,11 +118,4 @@ public class Deck : MonoBehaviour
             card.gameObject.SetActive(false);
     }
 
-    private void ApplyHalfSun() //justify 
-{
-    for (int i = 0; i < _deckPile.Count; i++)
-    {
-        _deckPile[i].cardData.halfSun = i < halfSunCount;
-    }
-}
 }

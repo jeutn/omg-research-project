@@ -13,6 +13,7 @@ public class CardUI : MonoBehaviour
 
     [Header("Prefab Elements")] //references to objects in the prefab 
     // GO through this again - make sure naming conventions are consistent 
+    [SerializeField] private Image _cardBorder;
     [SerializeField] private GameObject productionData;
     [SerializeField] private GameObject marketOfficeData;
     [SerializeField] private Image _cardBG;
@@ -67,6 +68,27 @@ public class CardUI : MonoBehaviour
 
     [SerializeField] private Sprite halfSunSprite; 
     [SerializeField] private Sprite marketExtraCard;
+
+    //CARD BACKING
+    [SerializeField] private GameObject cardFront; // all card elements
+    [SerializeField] private GameObject cardBack;  // card backing sprite
+
+    //update the goods amount 
+    [SerializeField] private TextMeshProUGUI goodsCounterText;
+
+    public void UpdateGoodsCounter(int amount, ResourceType resource)
+    {
+        if (goodsCounterText == null) return;
+        goodsCounterText.gameObject.SetActive(amount > 0);
+        goodsCounterText.text = $"{resource}: {amount}";
+    }
+
+    //set card backing
+    public void SetFaceDown(bool faceDown)
+    {
+        cardFront.SetActive(!faceDown);
+        cardBack.SetActive(faceDown);
+    }
     
     private void Awake()
     {

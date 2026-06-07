@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Shoemaker
   costToBuild: 12
   victoryPoints: 4
-  halfSun: 0
+  halfSun: 1
   prodOutput: 20
   goodsvalue: 8
   productionInput:

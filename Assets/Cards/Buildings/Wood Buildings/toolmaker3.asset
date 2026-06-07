@@ -18,6 +18,7 @@ MonoBehaviour:
   cardName: Tool Maker
   costToBuild: 15
   victoryPoints: 4
+  halfSun: 1
   prodOutput: 21
   goodsvalue: 6
   productionInput:

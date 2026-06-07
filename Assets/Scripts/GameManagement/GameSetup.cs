@@ -46,7 +46,10 @@ public class GameSetup : MonoBehaviour
         {
             player.goodsInventory[prodCardData.prodOutput] += startingGoodsAmt;
             player.coins += ResourceCoinValues.Value[prodCardData.prodOutput] * startingGoodsAmt;
+            Debug.Log(player.coins);
         }
+
+        UIManager.Instance.RefreshCoins();
 
         Debug.Log("Charburner dealt to player: " + player.playerID);
         // show the next button
@@ -64,7 +67,22 @@ public class GameSetup : MonoBehaviour
 
     public void FinishSetup()
     {
+        // mark current player as done setup
+        UIManager.Instance.SetHandFaceDown(GameManager.Instance.currentPlayer, true);
+
+        // move to next player
         PhaseManager.Instance.PlayerTurnEnd();
+
+        // if setup is complete, THEN move phase forward
+        if (GameManager.Instance.currentPhase == GamePhase.Setup &&
+            PhaseManager.Instance.CurrentPlayer == GameManager.Instance.player1)
+        {
+            // both players have finished (because index wrapped back to 0)
+            UIManager.Instance.SetHandFaceDown(GameManager.Instance.player1, true);
+            UIManager.Instance.SetHandFaceDown(GameManager.Instance.player2, true);
+
+            UIManager.Instance.ShowPanel(UIManager.Instance.preparationPanel);
+        }
     }
 
     private Card InstantiateCharburner(CardData cardData, Transform parent)

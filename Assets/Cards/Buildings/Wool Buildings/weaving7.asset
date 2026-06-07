@@ -18,6 +18,7 @@ MonoBehaviour:
   cardName: Weaving Mill
   costToBuild: 8
   victoryPoints: 2
+  halfSun: 1
   prodOutput: 12
   goodsvalue: 3
   productionInput:

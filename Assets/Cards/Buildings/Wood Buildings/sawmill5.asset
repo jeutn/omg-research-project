@@ -18,6 +18,7 @@ MonoBehaviour:
   cardName: Sawmill
   costToBuild: 2
   victoryPoints: 2
+  halfSun: 1
   prodOutput: 19
   goodsvalue: 2
   productionInput:
