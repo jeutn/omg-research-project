@@ -91,6 +91,29 @@ public class PhaseManager : MonoBehaviour
             UIManager.Instance.SetHandFaceDown(CurrentPlayer, false);
             
         }
+        if (GameManager.Instance.currentPhase == GamePhase.Planning)
+        {
+            // check which planning step we are in
+            bool bothWorkersChosen = 
+                GameManager.Instance.player1.workerMode != WorkerMode.Default &&
+                GameManager.Instance.player2.workerMode != WorkerMode.Default;
+
+            if (!bothWorkersChosen)
+            {
+                // still in worker selection — show popup for next player
+                UIManager.Instance.ShowWorkerSelection();
+                UIManager.Instance.UpdateTurnBanner(CurrentPlayer);
+            }
+            else
+            {
+                // both workers chosen — show building selection for next player
+                WorkerManager.Instance.ShowAvailableBuildings(CurrentPlayer);
+                UIManager.Instance.ShowBuildingSelection();
+                UIManager.Instance.UpdateTurnBanner(CurrentPlayer);
+            }
+        }
+
+
 
         
     }
@@ -147,5 +170,28 @@ public class PhaseManager : MonoBehaviour
         UIManager.Instance.ShowPanel(UIManager.Instance.sunrisePanel);
         GameManager.Instance.NextPhase();
     }
+
+    //SELECT and DESELECT METHODS FOR PRODUCTION
+    public void SelectProductionCard(Card card)
+    {
+        Player player = GameManager.Instance.currentPlayer;
+        if (player.selectedResources.Contains(card)) return;
+        if (card.cardLocation != CardLocation.Hand && 
+            card.cardLocation != CardLocation.Market) return;
+
+        player.selectedResources.Add(card);
+        card.GetComponent<CardUI>().SetSelected(true);
+    }
+
+    public void DeselectProductionCard(Card card)
+    {
+        Player player = GameManager.Instance.currentPlayer;
+        if (!player.selectedResources.Contains(card)) return;
+
+        player.selectedResources.Remove(card);
+        card.GetComponent<CardUI>().SetSelected(false);
+
+    }
+
 
 }

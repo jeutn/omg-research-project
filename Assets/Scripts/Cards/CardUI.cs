@@ -11,8 +11,7 @@ public class CardUI : MonoBehaviour
 {
     private Card _card;
 
-    [Header("Prefab Elements")] //references to objects in the prefab 
-    // GO through this again - make sure naming conventions are consistent 
+    [Header("Prefab Elements")]
     [SerializeField] private Image _cardBorder;
     [SerializeField] private GameObject productionData;
     [SerializeField] private GameObject marketOfficeData;
@@ -116,6 +115,7 @@ public class CardUI : MonoBehaviour
         _cardName.text = card.cardData.cardName;
         _coinsValue.text = card.cardData.costToBuild.ToString();
         _vpValue.text = card.cardData.victoryPoints.ToString();
+        goodsCounterText.gameObject.SetActive(false);
 
         _coinsValue.gameObject.SetActive(card.cardData.costToBuild > 0);
         _vpValue.gameObject.SetActive(card.cardData.victoryPoints > 0);
@@ -163,19 +163,6 @@ public class CardUI : MonoBehaviour
         {
             _chainOneImg.sprite = GetResource(data.productionChain);
         } 
-
-        //SCOPE CHANGE - only one production chain input required 
-
-        /*
-        if (data.productionChain != null && data.productionChain.Length > 1)
-        {
-            _chainTwoImg.sprite = GetResource(data.productionChain[1]);
-        } else
-        {
-            _chainTwoImg.gameObject.SetActive(false);
-        }*/ 
-
-        
     }
 
     //setup market card
@@ -245,6 +232,30 @@ public class CardUI : MonoBehaviour
             default: return null;
         }
         
+    }
+
+    //CARD BORDER COLOUR CHANGES WHEN SELECTED
+    public void SetSelectable(bool selectable)
+    {
+        _cardBorder.gameObject.SetActive(selectable);
+        _cardBorder.color = Color.grey;
+    }
+
+    public void SetSelected(bool selected)
+    {
+        _cardBorder.gameObject.SetActive(true);
+        _cardBorder.color = selected ? Color.yellow : Color.grey;
+    }
+
+    public void ClearBorder()
+    {
+        _cardBorder.gameObject.SetActive(false);
+    }
+
+    public void SetAsProductionBuilding(bool active)
+    {
+        _cardBorder.gameObject.SetActive(active);
+        _cardBorder.color = active ? Color.green : Color.clear;
     }
 
 

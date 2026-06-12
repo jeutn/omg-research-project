@@ -20,10 +20,11 @@ public class UIManager : MonoBehaviour
     private GameObject[] _allPanels;
 
     [Header("Text")]
-    [SerializeField] private TextMeshProUGUI turnBannerText;
+    [SerializeField] public TextMeshProUGUI turnBannerText;
 
     [SerializeField] private TextMeshProUGUI phaseBannerText;
-	[SerializeField] private TextMeshProUGUI instructionBannerText;
+	[SerializeField] private GameObject _instructionBanner;
+	[SerializeField] public TextMeshProUGUI instructionBannerText;
     [SerializeField] private TextMeshProUGUI halfSunCountText;
     [SerializeField] private TextMeshProUGUI winnerText;
 
@@ -52,6 +53,9 @@ public class UIManager : MonoBehaviour
 	[SerializeField] private GameObject workerSelectionObject;
 	[SerializeField] private TextMeshProUGUI worker1BannerText;
 	[SerializeField] private TextMeshProUGUI worker2BannerText;
+	[SerializeField] private GameObject buildingSelectionObject;
+	[SerializeField] private GameObject confirmBuildingButton;
+
 
 	//PLAYER STATS
 	[Header("Player Stats")]
@@ -75,6 +79,8 @@ public class UIManager : MonoBehaviour
 			sunrisePanel, planningPanel, sunsetPanel,
 			productionPanel, roundEndPanel, gameEndPanel
 		};
+
+		_instructionBanner.SetActive(false);
 	}
 
 	private void Start()
@@ -88,6 +94,8 @@ public class UIManager : MonoBehaviour
 		//set worker banners 
 		worker1BannerText.text = "P1 Worker: -";
 		worker2BannerText.text = "P2 Worker: -";
+
+		//disable instruction banner
 	}
 
 	//SETUP MENUS
@@ -179,6 +187,8 @@ public class UIManager : MonoBehaviour
 	public void ShowWorkerSelection()
 	{
 		workerSelectionObject.SetActive(true);
+		buildingSelectionObject.SetActive(false);
+		confirmBuildingButton.SetActive(false);
 	}
 
 	public void HideWorkerSelection()
@@ -198,12 +208,38 @@ public class UIManager : MonoBehaviour
 		//worker2BannerText.text = "P2 Worker: -";
 	}
 
+	public void ShowBuildingSelection()
+	{
+		workerSelectionObject.SetActive(false);
+		buildingSelectionObject.SetActive(true);
+		confirmBuildingButton.SetActive(true); // explicitly show every time
+		_instructionBanner.SetActive(true);
+		instructionBannerText.text = $"Player {GameManager.Instance.currentPlayer.playerID}: select a building for production";
+	}
+
     private void UpdatePhaseUI(GamePhase phase)
         {
             // show/hide banner with phase name + pass button to pass turn 
         }
 
 	//method to refresh buildingUI stats for each building in building site
+
+	//BUILDING GOODS COUNTER
+
+	public void RefreshBuildingSite(Player player)
+	{
+		foreach (Card building in player.buildingSite)
+		{
+			if (building.cardData is not ProdCardData prodData) continue;
+			
+			ResourceType resource = prodData.prodOutput;
+			int count = player.goodsInventory.ContainsKey(resource) 
+				? player.goodsInventory[resource] 
+				: 0;
+
+			building.GetComponent<CardUI>().UpdateGoodsCounter(count, resource);
+		}
+	}
 	
 
 }		

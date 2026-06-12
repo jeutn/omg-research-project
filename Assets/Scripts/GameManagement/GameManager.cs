@@ -46,6 +46,9 @@ public class GameManager : MonoBehaviour
                 break;
 
             case GamePhase.MarketOpen:
+                UIManager.Instance.turnBannerText.text = "Current turn: -";
+                UIManager.Instance.RefreshBuildingSite(player1);
+                UIManager.Instance.RefreshBuildingSite(player2);
                 PhaseManager.Instance.RunPreparation();
                 break;
 
@@ -55,10 +58,17 @@ public class GameManager : MonoBehaviour
                 break;
 
             case GamePhase.MarketClose:
+                UIManager.Instance.turnBannerText.text = "Current turn: -";
+                UIManager.Instance.instructionBannerText.text = "";
+                UIManager.Instance.ShowPanel(UIManager.Instance.sunrisePanel);
                 MarketManager.Instance.DrawUntilSun();
                 break;
 
             case GamePhase.Production:
+                UIManager.Instance.turnBannerText.text = "Current turn: Player 1";
+                UIManager.Instance.instructionBannerText.text = "Select resources for production";
+                UIManager.Instance.ShowPanel(UIManager.Instance.productionPanel);
+                UIManager.Instance.SetHandFaceDown(currentPlayer, false);
                 PhaseManager.Instance.RunProduction();
                 break;
 
